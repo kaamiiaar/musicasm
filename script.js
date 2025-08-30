@@ -189,7 +189,7 @@ document.addEventListener("DOMContentLoaded", function () {
     backgroundAudio
       .play()
       .then(() => {
-        updateAudioButton(true, "▶", "Playing");
+        updateAudioButton(true, "⏸", "Playing");
         audioToggle.classList.add("playing");
 
         // Sync waves animation with audio
@@ -197,7 +197,7 @@ document.addEventListener("DOMContentLoaded", function () {
       })
       .catch((error) => {
         console.error("Audio play failed:", error);
-        updateAudioButton(false, "⏸", "Click to play");
+        updateAudioButton(false, "", "Click to play");
       });
   }
 
@@ -205,7 +205,7 @@ document.addEventListener("DOMContentLoaded", function () {
     if (!backgroundAudio) return;
 
     backgroundAudio.pause();
-    updateAudioButton(false, "⏸", "Listen");
+    updateAudioButton(false, "", "Listen");
     audioToggle.classList.remove("playing");
 
     // Reset waves animation
@@ -216,7 +216,9 @@ document.addEventListener("DOMContentLoaded", function () {
     const audioIcon = audioToggle.querySelector(".audio-icon");
     const audioText = audioToggle.querySelector(".audio-text");
 
-    if (audioIcon) audioIcon.textContent = icon;
+    if (audioIcon) {
+      audioIcon.textContent = icon || "";
+    }
     if (audioText) audioText.textContent = text;
 
     audioToggle.setAttribute(

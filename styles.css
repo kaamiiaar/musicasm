@@ -147,9 +147,7 @@ body {
   -moz-osx-font-smoothing: grayscale;
 
   /* Performance optimizations */
-  will-change: transform;
   backface-visibility: hidden;
-  perspective: 1000px;
 }
 
 /* Background Animations */
@@ -162,8 +160,7 @@ body::before {
   bottom: 0;
   background: var(--plasma-gradient);
   z-index: var(--z-background);
-  animation: plasmaShift 20s ease-in-out infinite alternate;
-  will-change: transform;
+  animation: plasmaShift 60s ease-in-out infinite alternate;
 }
 
 body::after {
@@ -189,8 +186,7 @@ body::after {
       transparent 50%
     );
   z-index: var(--z-overlay);
-  animation: cosmicFloat 30s linear infinite;
-  will-change: transform;
+  animation: cosmicFloat 90s linear infinite;
 }
 
 /* ==========================================================================
@@ -199,10 +195,10 @@ body::after {
 
 @keyframes plasmaShift {
   0% {
-    transform: translateX(-10px) translateY(-5px) scale(1.02);
+    transform: translateX(-2px) translateY(-1px) scale(1.002);
   }
   100% {
-    transform: translateX(10px) translateY(5px) scale(0.98);
+    transform: translateX(2px) translateY(1px) scale(0.998);
   }
 }
 
@@ -210,11 +206,8 @@ body::after {
   0% {
     transform: rotate(0deg) scale(1);
   }
-  33% {
-    transform: rotate(120deg) scale(1.05);
-  }
-  66% {
-    transform: rotate(240deg) scale(0.95);
+  50% {
+    transform: rotate(180deg) scale(1.01);
   }
   100% {
     transform: rotate(360deg) scale(1);
@@ -374,7 +367,7 @@ header {
   font-size: var(--text-xl);
   font-weight: 700;
   transition: all 0.3s var(--ease-plasma);
-  display: flex;
+  display: none;
   align-items: center;
   justify-content: center;
   width: 28px;
@@ -387,6 +380,10 @@ header {
   animation: gradientShift 4s ease-in-out infinite;
   text-shadow: 0 0 10px rgba(139, 92, 246, 0.3);
   filter: drop-shadow(0 2px 4px rgba(139, 92, 246, 0.2));
+}
+
+.audio-icon:not(:empty) {
+  display: flex;
 }
 
 .audio-text {
@@ -515,8 +512,8 @@ header {
 
 .input-group button {
   padding: var(--space-4) var(--space-8);
-  background: var(--neural-gradient);
-  border: none;
+  background: var(--sonic-purple);
+  border: 2px solid var(--sonic-purple);
   border-radius: 12px;
   color: white;
   font-weight: 600;
@@ -533,6 +530,9 @@ header {
 }
 
 .input-group button:hover {
+  background: transparent;
+  color: var(--sonic-purple);
+  border-color: var(--sonic-purple);
   transform: translateY(-2px);
   box-shadow: var(--plasma-shadow);
 }
