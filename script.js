@@ -1,0 +1,139 @@
+document.addEventListener('DOMContentLoaded', function() {
+    const waitlistForms = document.querySelectorAll('#waitlist-signup, .waitlist-signup-secondary');
+    const successMessage = document.getElementById('success-message');
+    
+    waitlistForms.forEach(form => {
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const email = form.querySelector('input[type="email"]').value;
+            const button = form.querySelector('button[type="submit"]');
+            const originalButtonText = button.textContent;
+            
+            // Validate email
+            if (!isValidEmail(email)) {
+                showError(form, 'Please enter a valid email address');
+                return;
+            }
+            
+            // Show loading state
+            button.textContent = 'Joining...';
+            button.disabled = true;
+            
+            // Simulate API call (replace with actual backend integration)
+            setTimeout(() => {
+                // Store email in localStorage for now (replace with actual backend)
+                storeEmail(email);
+                
+                // Show success message
+                if (form.id === 'waitlist-signup') {
+                    form.style.display = 'none';
+                    successMessage.classList.remove('hidden');
+                } else {
+                    showSuccess(form, 'Thank you! You\'re on the waiting list.');
+                }
+                
+                // Track conversion (replace with your analytics)
+                trackWaitlistSignup(email);
+                
+            }, 1000);
+        });
+    });
+    
+    function isValidEmail(email) {
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return emailRegex.test(email);
+    }
+    
+    function storeEmail(email) {
+        let emails = JSON.parse(localStorage.getItem('musicasm_emails') || '[]');
+        if (!emails.includes(email)) {
+            emails.push({
+                email: email,
+                timestamp: new Date().toISOString()
+            });
+            localStorage.setItem('musicasm_emails', JSON.stringify(emails));
+        }
+    }
+    
+    function showError(form, message) {
+        removeMessages(form);
+        const errorDiv = document.createElement('div');
+        errorDiv.className = 'form-message error-message';
+        errorDiv.innerHTML = `<p style="color: #ef4444; margin-top: 1rem; text-align: center;">${message}</p>`;
+        form.appendChild(errorDiv);
+        
+        setTimeout(() => {
+            errorDiv.remove();
+        }, 5000);
+    }
+    
+    function showSuccess(form, message) {
+        removeMessages(form);
+        const successDiv = document.createElement('div');
+        successDiv.className = 'form-message success-message';
+        successDiv.innerHTML = `<p style="color: #10b981; margin-top: 1rem; text-align: center;">🎵 ${message}</p>`;
+        form.appendChild(successDiv);
+        
+        // Reset form
+        form.querySelector('input[type="email"]').value = '';
+        form.querySelector('button[type="submit"]').textContent = 'Join Waiting List';
+        form.querySelector('button[type="submit"]').disabled = false;
+        
+        setTimeout(() => {
+            successDiv.remove();
+        }, 5000);
+    }
+    
+    function removeMessages(form) {
+        const existingMessages = form.querySelectorAll('.form-message');
+        existingMessages.forEach(msg => msg.remove());
+    }
+    
+    function trackWaitlistSignup(email) {
+        // Replace with your analytics tracking
+        if (typeof gtag !== 'undefined') {
+            gtag('event', 'signup', {
+                event_category: 'waitlist',
+                event_label: 'email_signup',
+                value: 1
+            });
+        }
+        
+        // Console log for development
+        console.log('Waitlist signup:', email);
+    }
+    
+    // Smooth scrolling for any internal links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            e.preventDefault();
+            const target = document.querySelector(this.getAttribute('href'));
+            if (target) {
+                target.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+            }
+        });
+    });
+    
+    // Add scroll effect to header
+    window.addEventListener('scroll', function() {
+        const header = document.querySelector('header');
+        if (window.scrollY > 100) {
+            header.style.background = 'rgba(255, 255, 255, 0.98)';
+        } else {
+            header.style.background = 'rgba(255, 255, 255, 0.95)';
+        }
+    });
+    
+    // Music waves animation variation
+    const waves = document.querySelectorAll('.wave');
+    waves.forEach((wave, index) => {
+        setInterval(() => {
+            const randomHeight = Math.random() * 80 + 40;
+            wave.style.height = randomHeight + 'px';
+        }, 1500 + (index * 200));
+    });
+});

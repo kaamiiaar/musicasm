@@ -1,0 +1,27 @@
+{
+  "name": "musicasm-landing",
+  "version": "1.0.0",
+  "description": "Landing page for Musicasm - Infinite Musical Dopamine for Your Brain",
+  "main": "index.html",
+  "scripts": {
+    "dev": "python -m http.server 3000",
+    "build": "echo 'No build process needed for static site'",
+    "start": "python -m http.server 8000"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/kaamiiaar/musicasm.git"
+  },
+  "keywords": [
+    "music",
+    "ai",
+    "personalized",
+    "infinite",
+    "dopamine",
+    "landing-page"
+  ],
+  "author": "Musicasm Team",
+  "license": "MIT",
+  "devDependencies": {},
+  "dependencies": {}
+}
