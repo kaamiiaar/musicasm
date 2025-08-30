@@ -66,9 +66,10 @@ header {
 }
 
 /* Audio Controls */
-.audio-controls {
+.audio-controls-hero {
     display: flex;
-    align-items: center;
+    justify-content: center;
+    margin-top: 1.5rem;
 }
 
 .audio-btn {
@@ -262,6 +263,7 @@ header {
 /* Music Waves Animation */
 .hero-visual {
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     height: 400px;
@@ -517,7 +519,7 @@ footer {
     }
     
     .hero-visual {
-        height: 300px;
+        height: 350px;
     }
     
     .music-waves {
@@ -529,8 +531,8 @@ footer {
         font-size: 0.8rem;
     }
     
-    .audio-text {
-        display: none;
+    .audio-controls-hero {
+        margin-top: 1rem;
     }
 }
 
