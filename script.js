@@ -129,9 +129,13 @@ document.addEventListener("DOMContentLoaded", function () {
   window.addEventListener("scroll", function () {
     const header = document.querySelector("header");
     if (window.scrollY > 100) {
-      header.style.background = "rgba(255, 255, 255, 0.98)";
+      // Darker background when scrolled for better contrast
+      header.style.background = "rgba(15, 23, 42, 0.95)";
+      header.style.backdropFilter = "blur(25px) saturate(200%)";
     } else {
-      header.style.background = "rgba(255, 255, 255, 0.95)";
+      // Lighter background when at top
+      header.style.background = "rgba(15, 23, 42, 0.8)";
+      header.style.backdropFilter = "blur(20px) saturate(180%)";
     }
   });
 
@@ -141,7 +145,7 @@ document.addEventListener("DOMContentLoaded", function () {
     setInterval(() => {
       const randomHeight = Math.random() * 80 + 40;
       wave.style.height = randomHeight + "px";
-    }, 1500 + index * 200);
+    }, 6000 + index * 1000);
   });
 
   // Audio Controls Functions
@@ -225,7 +229,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const waves = document.querySelectorAll(".wave");
 
     if (isPlaying) {
-      // More dynamic animation when audio is playing
+      // Very gentle animation when audio is playing
       waves.forEach((wave, index) => {
         const interval = wave.getAttribute("data-interval");
         if (interval) clearInterval(interval);
@@ -233,12 +237,12 @@ document.addEventListener("DOMContentLoaded", function () {
         const newInterval = setInterval(() => {
           const randomHeight = Math.random() * 100 + 60;
           wave.style.height = randomHeight + "px";
-        }, 800 + index * 150);
+        }, 5000 + index * 800);
 
         wave.setAttribute("data-interval", newInterval);
       });
     } else {
-      // Calmer animation when audio is paused
+      // Extremely calm animation when audio is paused
       waves.forEach((wave, index) => {
         const interval = wave.getAttribute("data-interval");
         if (interval) clearInterval(interval);
@@ -246,7 +250,7 @@ document.addEventListener("DOMContentLoaded", function () {
         const newInterval = setInterval(() => {
           const randomHeight = Math.random() * 80 + 40;
           wave.style.height = randomHeight + "px";
-        }, 1500 + index * 200);
+        }, 8000 + index * 1200);
 
         wave.setAttribute("data-interval", newInterval);
       });
