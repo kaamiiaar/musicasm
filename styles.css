@@ -365,17 +365,28 @@ header {
 }
 
 .audio-btn.playing .audio-icon {
-  animation: bounce 1s infinite;
+  animation: bounce 1s infinite, gradientShift 2s ease-in-out infinite;
+  text-shadow: 0 0 20px rgba(139, 92, 246, 0.6);
+  filter: drop-shadow(0 4px 8px rgba(139, 92, 246, 0.4));
 }
 
 .audio-icon {
-  font-size: var(--text-lg);
-  transition: all 0.3s ease;
+  font-size: var(--text-xl);
+  font-weight: 700;
+  transition: all 0.3s var(--ease-plasma);
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 24px;
-  height: 24px;
+  width: 28px;
+  height: 28px;
+  background: var(--neural-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  background-size: 200% 200%;
+  animation: gradientShift 4s ease-in-out infinite;
+  text-shadow: 0 0 10px rgba(139, 92, 246, 0.3);
+  filter: drop-shadow(0 2px 4px rgba(139, 92, 246, 0.2));
 }
 
 .audio-text {
