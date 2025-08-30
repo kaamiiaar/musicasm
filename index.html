@@ -23,9 +23,22 @@
           <div class="logo">
             <h1>Musicasm</h1>
           </div>
+          <div class="audio-controls">
+            <button id="audio-toggle" class="audio-btn" aria-label="Toggle background music">
+              <span class="audio-icon">🎵</span>
+              <span class="audio-text">Sample</span>
+            </button>
+          </div>
         </div>
       </nav>
     </header>
+
+    <!-- Background Audio -->
+    <audio id="background-audio" loop preload="auto">
+      <source src="assets/audio/background_music.webm" type="audio/webm">
+      <source src="assets/audio/background_music.mp3" type="audio/mpeg">
+      Your browser does not support the audio element.
+    </audio>
 
     <main>
       <section class="hero">

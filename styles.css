@@ -65,6 +65,71 @@ header {
     background-clip: text;
 }
 
+/* Audio Controls */
+.audio-controls {
+    display: flex;
+    align-items: center;
+}
+
+.audio-btn {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.25rem;
+    background: var(--bg-gradient);
+    border: none;
+    border-radius: 50px;
+    color: white;
+    font-weight: 500;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: var(--shadow-light);
+    position: relative;
+    overflow: hidden;
+}
+
+.audio-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-medium);
+}
+
+.audio-btn.playing {
+    animation: pulse 2s infinite;
+}
+
+.audio-btn.playing .audio-icon {
+    animation: bounce 1s infinite;
+}
+
+.audio-icon {
+    font-size: 1.1rem;
+    transition: all 0.3s ease;
+}
+
+.audio-text {
+    font-weight: 600;
+    letter-spacing: 0.5px;
+}
+
+@keyframes pulse {
+    0%, 100% {
+        box-shadow: 0 0 0 0 rgba(99, 102, 241, 0.4);
+    }
+    50% {
+        box-shadow: 0 0 0 8px rgba(99, 102, 241, 0);
+    }
+}
+
+@keyframes bounce {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-3px);
+    }
+}
+
 /* Hero Section */
 .hero {
     padding: 120px 0 80px;
@@ -457,6 +522,15 @@ footer {
     
     .music-waves {
         height: 150px;
+    }
+    
+    .audio-btn {
+        padding: 0.6rem 1rem;
+        font-size: 0.8rem;
+    }
+    
+    .audio-text {
+        display: none;
     }
 }
 

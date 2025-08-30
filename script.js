@@ -1,6 +1,11 @@
 document.addEventListener('DOMContentLoaded', function() {
     const waitlistForms = document.querySelectorAll('#waitlist-signup, .waitlist-signup-secondary');
     const successMessage = document.getElementById('success-message');
+    const audioToggle = document.getElementById('audio-toggle');
+    const backgroundAudio = document.getElementById('background-audio');
+    
+    // Initialize audio controls
+    initializeAudioControls();
     
     waitlistForms.forEach(form => {
         form.addEventListener('submit', function(e) {
@@ -136,4 +141,110 @@ document.addEventListener('DOMContentLoaded', function() {
             wave.style.height = randomHeight + 'px';
         }, 1500 + (index * 200));
     });
+    
+    // Audio Controls Functions
+    function initializeAudioControls() {
+        if (!audioToggle || !backgroundAudio) return;
+        
+        // Set initial volume
+        backgroundAudio.volume = 0.3;
+        
+        // Handle audio toggle
+        audioToggle.addEventListener('click', toggleAudio);
+        
+        // Handle audio events
+        backgroundAudio.addEventListener('loadstart', () => {
+            console.log('Audio loading started');
+        });
+        
+        backgroundAudio.addEventListener('canplaythrough', () => {
+            console.log('Audio ready to play');
+        });
+        
+        backgroundAudio.addEventListener('error', (e) => {
+            console.error('Audio error:', e);
+            updateAudioButton(false, '❌', 'Error');
+        });
+    }
+    
+    function toggleAudio() {
+        if (!backgroundAudio) return;
+        
+        if (backgroundAudio.paused) {
+            playAudio();
+        } else {
+            pauseAudio();
+        }
+    }
+    
+    function playAudio() {
+        if (!backgroundAudio) return;
+        
+        backgroundAudio.play()
+            .then(() => {
+                updateAudioButton(true, '🎵', 'Playing');
+                audioToggle.classList.add('playing');
+                
+                // Sync waves animation with audio
+                syncWavesWithAudio(true);
+            })
+            .catch((error) => {
+                console.error('Audio play failed:', error);
+                updateAudioButton(false, '🔇', 'Click to play');
+            });
+    }
+    
+    function pauseAudio() {
+        if (!backgroundAudio) return;
+        
+        backgroundAudio.pause();
+        updateAudioButton(false, '🎵', 'Sample');
+        audioToggle.classList.remove('playing');
+        
+        // Reset waves animation
+        syncWavesWithAudio(false);
+    }
+    
+    function updateAudioButton(isPlaying, icon, text) {
+        const audioIcon = audioToggle.querySelector('.audio-icon');
+        const audioText = audioToggle.querySelector('.audio-text');
+        
+        if (audioIcon) audioIcon.textContent = icon;
+        if (audioText) audioText.textContent = text;
+        
+        audioToggle.setAttribute('aria-label', 
+            isPlaying ? 'Pause background music' : 'Play background music');
+    }
+    
+    function syncWavesWithAudio(isPlaying) {
+        const waves = document.querySelectorAll('.wave');
+        
+        if (isPlaying) {
+            // More dynamic animation when audio is playing
+            waves.forEach((wave, index) => {
+                const interval = wave.getAttribute('data-interval');
+                if (interval) clearInterval(interval);
+                
+                const newInterval = setInterval(() => {
+                    const randomHeight = Math.random() * 100 + 60;
+                    wave.style.height = randomHeight + 'px';
+                }, 800 + (index * 150));
+                
+                wave.setAttribute('data-interval', newInterval);
+            });
+        } else {
+            // Calmer animation when audio is paused
+            waves.forEach((wave, index) => {
+                const interval = wave.getAttribute('data-interval');
+                if (interval) clearInterval(interval);
+                
+                const newInterval = setInterval(() => {
+                    const randomHeight = Math.random() * 80 + 40;
+                    wave.style.height = randomHeight + 'px';
+                }, 1500 + (index * 200));
+                
+                wave.setAttribute('data-interval', newInterval);
+            });
+        }
+    }
 });
